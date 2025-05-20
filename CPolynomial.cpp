@@ -5,9 +5,10 @@
 
 #include "CPolynomial.h"
 
+enum{POLY, LOG, POW};
+
 /// @brief Default Constructor of Polynomial class
 Polynomial::Polynomial() {
-	cout << "Polynomial constructor" << endl;
 	degree=-1;
 	coeff = NULL;
 }
@@ -17,8 +18,6 @@ Polynomial::Polynomial() {
 ///	@param coefficients array with the coefficients (format: c0+c1*x+ ...)
 ///	@param size size of the array
 Polynomial::Polynomial(const double* coefficients, int size) {
-
-	cout << "Polynomial constructor" << endl;
 	degree = -1;
 	coeff = NULL;
 
@@ -28,8 +27,6 @@ Polynomial::Polynomial(const double* coefficients, int size) {
 /// @brief Destructor of Polynomial class
 /// @details This destructor deletes the coefficients of the polynomial.
 Polynomial::~Polynomial() {
-
-    cout << "Polynomial destructor" << endl;
 	if (coeff != NULL) {
 		delete coeff;
 		coeff = NULL;
@@ -38,8 +35,6 @@ Polynomial::~Polynomial() {
 
 /// @brief Copy Constructor of Polynomial class
 Polynomial::Polynomial(const Polynomial& p) {
-	
-	cout << "Polynomial copy constructor" << endl;
 	int i;
 	
 	if (p.coeff == NULL) {
@@ -62,7 +57,6 @@ Polynomial::Polynomial(const Polynomial& p) {
 /// @details This operator copies the coefficients of the polynomial p into the current object.
 ///	@param p the polynomial to be copied
 Polynomial& Polynomial::operator=(const Polynomial& p) {
-    
 	int i; 
 	
 	if (this != &p) {
@@ -144,6 +138,12 @@ double Polynomial::GetValue(double in) const {
 		return result;
 }
 
+/// @brief Returns the type of the function
+/// @return the type of the function
+int Polynomial::getType() const {
+	return POLY;
+}
+
 /// @brief Resets the polynomial 
 /// @details This function deletes the coefficients of the polynomial and sets the degree to -1.
 void Polynomial::Reset() {
@@ -190,7 +190,6 @@ void Polynomial::Dump() {
 		return;
 	}
 	
-	cout << "Polynomial function: ";
     for (i = 0; i <= degree; ++i) {
 		if (coeff[i] != 0.) {
 			cout << (coeff[i] > 0 && i > 0 ? " +" : " ") << coeff[i];

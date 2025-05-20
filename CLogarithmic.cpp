@@ -6,9 +6,10 @@
 #include <math.h>
 #include "CLogarithmic.h"
 
+enum{POLY, LOG, POW};
+
 /// @brief Default Constructor of Power class
 Logarithmic::Logarithmic() {
-    cout << "Logarithmic constructor" << endl;
     k_coeff = 0;
     b_coeff = -1;
 }
@@ -18,23 +19,18 @@ Logarithmic::Logarithmic() {
 ///	@param k coefficient of the logarithmic function
 ///	@param b base of the logarithmic function
 Logarithmic::Logarithmic(double k, double b) {
-    cout << "Logarithmic constructor" << endl;
     SetLogarithmic(k, b);
 }
 
 /// @brief Copy Constructor of Logarithmic class
 /// @param l the logarithmic function to be copied
 Logarithmic::Logarithmic(const Logarithmic& l) {
-
-    cout << "Logarithmic copy constructor" << endl;
-	
     k_coeff = l.k_coeff;
     b_coeff = l.b_coeff;
 }
 
 /// @brief Destructor of Logarithmic class
 Logarithmic::~Logarithmic() {
-    cout << "Logarithmic destructor" << endl;
 }
 
 /// @brief Assignment operator of Logarithmic class
@@ -79,6 +75,12 @@ double Logarithmic::GetValue(double in) const {
     return k_coeff * (log(in) / log(b_coeff));
 }
 
+/// @brief Returns the type of the function
+/// @return the type of the function
+int Logarithmic::getType() const {
+    return LOG;
+}
+
 /// @brief Error message function
 /// @param string message to be printed
 void Logarithmic::ErrorMessage(const char *string) {
@@ -100,6 +102,6 @@ void Logarithmic::Dump() {
     }
     else
     {
-        cout << "Logarithmic function: " << k_coeff << "*log_" << b_coeff << " (x)" << endl << endl;
+        cout << k_coeff << "*log_" << b_coeff << " (x)" << endl << endl;
     }
 }

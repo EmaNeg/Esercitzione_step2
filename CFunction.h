@@ -23,13 +23,14 @@ public:
     
 	/// @name CONSTRUCTORS/DESTRUCTOR
 	/// @{
-    Function(){cout << "Function constructor" << endl;};
-    virtual ~Function(){cout << "Function destructor" << endl;};
+    Function(){};
+    virtual ~Function(){};
 	/// @}
 
 	/// @name GETTERS
 	/// @{
 	virtual double GetValue(double in) const =0;
+	virtual int getType() const =0;
 	/// @}
 
 	/// @name DEBUG 

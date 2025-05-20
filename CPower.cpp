@@ -5,9 +5,10 @@
 
 #include "CPower.h"
 
+enum{POLY, LOG, POW};
+
 /// @brief Default Constructor of Power class
 Power::Power() {
-    cout << "Power constructor" << endl;
     k_coeff = 0.0;
     e_coeff = 0.0;
 }
@@ -17,22 +18,17 @@ Power::Power() {
 ///	@param k coefficient of the power function
 ///	@param e exponent of the power function
 Power::Power(double k, double e) {
-    cout << "Power constructor" << endl;
     SetPower(k, e);
 }
 
 /// @brief Copy Constructor of Power class
 Power::Power(const Power& p) {
-
-    cout << "Power copy constructor" << endl;
-	
     k_coeff = p.k_coeff;
     e_coeff = p.e_coeff;
 }
 
 /// @brief Destructor of Power class
 Power::~Power() {
-    cout << "Power destructor" << endl;
 }
 
 /// @brief Assignment operator of Power class
@@ -87,6 +83,12 @@ double Power::GetValue(double in) const {
     }
 }
 
+/// @brief Returns the type of the function
+/// @return the type of the function
+int Power::getType() const {
+    return POW;
+}
+
 /// @brief Error message function
 /// @param string message to be printed
 void Power::ErrorMessage(const char *string) {
@@ -103,5 +105,5 @@ void Power::WarningMessage(const char *string) {
 
 /// @brief Gives the status of the object
 void Power::Dump() {
-    cout << "Power function: " << k_coeff << "*x^" << e_coeff << endl << endl;
+    cout << k_coeff << "*x^" << e_coeff << endl << endl;
 }

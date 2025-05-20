@@ -47,6 +47,7 @@ public:
 	/// @{}
 	void SetPolynomial(const double* coefficients, int size);
     double GetValue(double in) const;
+	int getType() const;
 	/// @}
 	
 	void Reset();

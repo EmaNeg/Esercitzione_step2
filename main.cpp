@@ -11,23 +11,22 @@
 using namespace std;
 
 int main() {
-    // Clear the screen
-    clearScreen();
     
+    Menu menu;
+    FunctionList functionList;
+
     while (true) {
-        Menu menu;
+
         menu.displayMenu();
         
         // Get user choice
         int choice = menu.getUserChoice();
         
         // Handle user choice
-        if (manageUserChoice(choice) == 0) {
+        if (manageUserChoice(choice, functionList) == 0) {
             break; // Exit the loop if the user chooses to exit
         }
         
-        // Clear the input buffer before the next iteration
-        clearInputBuffer();
     }
     
     return 0;

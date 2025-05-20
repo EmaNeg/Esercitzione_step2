@@ -48,6 +48,7 @@ public:
     /// @{
     void SetLogarithmic(double k, double b);
     double GetValue(double in) const;
+    int getType() const;
     /// @}
 
     /// @name DEBUG and SERIALIZATION 

@@ -47,6 +47,7 @@ public:
     /// @{
     void SetPower(double k, double e);
     double GetValue(double in) const;
+    int getType() const;
     /// @}
 
     /// @name DEBUG and SERIALIZATION 

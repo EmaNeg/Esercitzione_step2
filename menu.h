@@ -17,20 +17,33 @@ using namespace std;
 
 class Menu {
 private:
+    /// @name MEMBERS VARIABLEs
+    /// @{
     vector<string> options;
-    FunctionList functionList;
+    /// @}
 public:
+
+    /// @name CONSTRUCTORS
+    /// @{
+    Menu();
+    ~Menu();
+    /// @}
+
+    /// @name MEMBER FUNCTIONS
+    /// @{
     void displayMenu();
     int getUserChoice();
+    /// @}
 };
 
-void insertFunction();
-void deleteFunction();
-void deleteAllFunctions();
-void selectFunction();
-int manageUserChoice(int choice);
-void showFunctionsList();
-void clearInputBuffer();
-void clearScreen();
+/// @name FUNCTIONS
+/// @{
+void insertFunction(FunctionList &functionList);
+void showFunctionsList(FunctionList &functionList);
+void deleteFunction(FunctionList &functionList);
+void deleteAllFunctions(FunctionList &functionList);
+void selectFunction(FunctionList &functionList);
+int manageUserChoice(int choice, FunctionList &functionList);
+/// @}
 
 #endif // MENU_H

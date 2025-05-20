@@ -14,13 +14,22 @@
 #include "CPolynomial.h"
 #include "CFunction.h"
 
+enum{POLY, LOG, POW};
 
 using namespace std;
 
+/*! @struct FunctionElements
+    @brief Structure for storing function elements
+    @details This structure contains the ID, type, and pointer to the function.
+*/
 typedef struct functionElements {
+    /// @name MEMBERS VARIABLEs
+    /// @{
     int ID;
+    int type;
     Function *funzione;
     struct functionElements *nextFunctionElement;
+    /// @}
 } FunctionElements;
 typedef FunctionElements* FunctionElementsPtr;
 
@@ -39,10 +48,10 @@ public:
     FunctionList(Function *function);
     ~FunctionList();
 
-    bool addFunction(FunctionElementsPtr *p, Function *f);
-    void deleteFunction();
-    void deleteAllFunctions();
-    void selectFunction();
+    bool addFunction(Function *f);
+    bool deleteFunction(int id);
+    bool deleteAllFunctions();
+    void selectFunction(int id, double x);
     void showFunctionsList();
 };
 
