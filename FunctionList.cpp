@@ -8,11 +8,17 @@
 
 using namespace std;
 
+/// @brief Default Constructor of FunctionList class
+/// @details This constructor initializes the first element of the function list to NULL.
 FunctionList::FunctionList() {
     // Constructor implementation
     firstElement = NULL; // Initialize the first element to NULL
 }
 
+/// @brief Constructor of FunctionList class
+/// @details This constructor initializes the first element of the function list with a given function.
+/// @param function Pointer to the function to be added to the list.
+/// @details If the function is NULL, the first element is set to NULL.
 FunctionList::FunctionList(Function *function) {
     if(function != NULL) {
         firstElement = new FunctionElements;
@@ -25,12 +31,19 @@ FunctionList::FunctionList(Function *function) {
     }
 }
 
+/// @brief Destructor of FunctionList class
+/// @details This destructor deletes all functions in the list and cleans up the memory.
+/// @details It also deletes the first element pointer.
 FunctionList::~FunctionList() {
     // Destructor implementation
     deleteAllFunctions(); // Clean up all functions when the list is destroyed
     delete firstElement; // Delete the first element pointer
 }
 
+/// @brief Function to search for the next available ID in the function list.
+/// @param firstElement Pointer to the first element of the function list.
+/// @return The next available ID for a new function.
+/// @details This function iterates through the list of functions and finds the maximum ID.
 int searchID(FunctionElementsPtr firstElement) {
     FunctionElementsPtr currentPtr = firstElement;
     int maxID = -1;
@@ -43,6 +56,10 @@ int searchID(FunctionElementsPtr firstElement) {
     return maxID + 1; // Return the next available ID
 }
 
+/// @brief Function to add a function to the list.
+/// @param f Pointer to the function to be added.
+/// @return true if the function was added successfully, false otherwise.
+/// @details This function creates a new FunctionElements structure, sets its ID, type, and function pointer,
 bool FunctionList::addFunction(Function *f) {
     FunctionElementsPtr pNew = new FunctionElements;
     FunctionElementsPtr prevPtr;
@@ -74,6 +91,10 @@ bool FunctionList::addFunction(Function *f) {
     }
 }
 
+/// @brief Function to delete a function from the list.
+/// @param id The ID of the function to be deleted.
+/// @return true if the function was deleted successfully, false otherwise.
+/// @details This function searches for the function with the given ID and deletes it from the list.
 bool FunctionList::deleteFunction(int id) {
     FunctionElementsPtr currentPtr = firstElement;
     FunctionElementsPtr prevPtr = NULL;
@@ -97,6 +118,9 @@ bool FunctionList::deleteFunction(int id) {
     }
 }
 
+/// @brief Function to delete all functions from the list.
+/// @return true if all functions were deleted successfully, false otherwise.
+/// @details This function iterates through the list and deletes each function and its corresponding element.
 bool FunctionList::deleteAllFunctions() {
     FunctionElementsPtr currentPtr = firstElement;
     FunctionElementsPtr nextPtr;
@@ -111,6 +135,10 @@ bool FunctionList::deleteAllFunctions() {
     return 1;
 }
 
+/// @brief Function to select a function by ID and evaluate it at a given x.
+/// @param id The ID of the function to be selected.
+/// @param x The value at which to evaluate the function.
+/// @details This function searches for the function with the given ID and evaluates it at the specified x.
 void FunctionList::selectFunction(int id, double x) {
     FunctionElementsPtr currentPtr = firstElement;
     while (currentPtr != NULL) {
@@ -124,6 +152,8 @@ void FunctionList::selectFunction(int id, double x) {
     cout << "Function with ID " << id << " not found.\n";
 }
 
+/// @brief Function to show the list of functions.
+/// @details This function iterates through the list of functions and prints their details.
 void FunctionList::showFunctionsList() {
     // Implementation for showing the list of functions
     if (firstElement == NULL) {

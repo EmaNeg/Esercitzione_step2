@@ -44,15 +44,21 @@ private:
     FunctionElementsPtr firstElement = NULL;
     /// @}
 public:
+    /// @name CONSTRUCTORS
+    /// @{
     FunctionList();
     FunctionList(Function *function);
     ~FunctionList();
+    /// @}
 
+    /// @name MEMBER FUNCTIONS
+    /// @{
     bool addFunction(Function *f);
     bool deleteFunction(int id);
     bool deleteAllFunctions();
     void selectFunction(int id, double x);
     void showFunctionsList();
+    /// @}
 };
 
 #endif // FUNCTIONLIST_H

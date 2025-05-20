@@ -4,17 +4,23 @@
     @author Emanuele Negrino and Carlo Toscano
 */ 
 
-#include "menu.h"
+#include "Interface.h"
 
 using namespace std;
 
+/// @brief Default Constructor of Menu class
+/// @details This constructor initializes the menu options.
 Menu::Menu() {
     // Constructor implementation
 }
 
+/// @brief Destructor of Menu class
+/// @details This destructor cleans up the menu options.
 Menu::~Menu() {
 }
 
+/// @brief Function to display the menu options
+/// @details This function displays the menu options to the user and prompts for input.
 void Menu::displayMenu() {
     // Display the menu options
     options = {
@@ -33,6 +39,9 @@ void Menu::displayMenu() {
     cout << "Please select an option (0-" << options.size()-1 << "): ";
 }
 
+/// @brief Function to get user choice
+/// @details This function prompts the user for input and validates it.
+/// @return The user's choice as an integer
 int Menu::getUserChoice() {
     int min = 0;
     int max = (int)(options.size()-1);
@@ -44,24 +53,50 @@ int Menu::getUserChoice() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
             cout << "Invalid input. Please enter a number between " << min << " and " << max << ": ";
         } else {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the rest of the line
+            
             break;
         }
     }
     return choice;
 }
 
+/// @brief Function to check if the input is numeric
+/// @details This function checks if the input is numeric and clears the error flag if not.
+/// @return true if the input is numeric, false otherwise
+bool checkIfNumeric() {
+    if(cin.fail()) {
+        cin.clear(); // clear the error flag
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+        return false;
+    }
+    return true;
+}
+
+/// @brief Function to show the list of functions
+/// @details This function displays the list of functions to the user.
+/// @param functionList The list of functions to be displayed
 void showFunctionsList(FunctionList &functionList) {
     cout << "List of functions:\n";
     functionList.showFunctionsList();
 }
 
+/// @brief Function to insert a power function
+/// @details This function prompts the user for input to create a power function and adds it to the list.
+/// @param functionList The list of functions to which the power function will be added
 void insertPowerFunction(FunctionList &functionList) {
     double coeff, exponent;
-    cout << "Enter base: ";
+    cout << "Enter coefficient: ";
     cin >> coeff;
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter numeric values.\n";
+        return;
+    }
     cout << "Enter exponent: ";
     cin >> exponent;
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter numeric values.\n";
+        return;
+    }
     Function *powerFunction = new Power(coeff, exponent);
     cout << "Power function: ";
     powerFunction->Dump();
@@ -78,12 +113,23 @@ void insertPowerFunction(FunctionList &functionList) {
     functionList.addFunction(powerFunction);
 }
 
+/// @brief Function to insert a logarithmic function
+/// @details This function prompts the user for input to create a logarithmic function and adds it to the list.
+/// @param functionList The list of functions to which the logarithmic function will be added
 void insertLogFunction(FunctionList &functionList) {
     double coeff, base;
     cout << "Enter coefficient: ";
     cin >> coeff;
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter numeric values.\n";
+        return;
+    }
     cout << "Enter base: ";
     cin >> base;
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter numeric values.\n";
+        return;
+    }
     Function *logFunction = new Logarithmic(coeff, base);
     cout << "Logarithmic function: ";
     logFunction->Dump();
@@ -100,10 +146,17 @@ void insertLogFunction(FunctionList &functionList) {
     functionList.addFunction(logFunction);
 }
 
+/// @brief Function to insert a polynomial function
+/// @details This function prompts the user for input to create a polynomial function and adds it to the list.
+/// @param functionList The list of functions to which the polynomial function will be added
 void insertPolynomialFunction(FunctionList &functionList) {
     int degree;
     cout << "Enter degree: ";
     cin >> degree;
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter a non-negative integer.\n";
+        return;
+    }
     double *coefficients = new double[static_cast<size_t>(degree + 1)];
     if (coefficients == NULL) {
         cout << "Memory allocation failed.\n";
@@ -112,6 +165,11 @@ void insertPolynomialFunction(FunctionList &functionList) {
     cout << "Enter coefficients (from constant to highest degree): ";
     for (int i = 0; i <= degree; ++i) {
         cin >> coefficients[i];
+        if(checkIfNumeric() == false){
+            cout << "Invalid input. Please enter numeric values.\n";
+            delete[] coefficients; // Free the allocated memory for coefficients
+            return;
+        }
     }
     Function *polyFunction = new Polynomial(coefficients, degree);
     cout << "Polynomial function: ";
@@ -131,6 +189,9 @@ void insertPolynomialFunction(FunctionList &functionList) {
     delete[] coefficients; // Free the allocated memory for coefficients
 }
 
+/// @brief Function to insert a function into the list
+/// @details This function prompts the user to choose a function type and calls the appropriate insertion function.
+/// @param functionList The list of functions to which the new function will be added
 void insertFunction(FunctionList &functionList) {
     cout << "Chose a function to insert:\n";
     cout << "1. Power Function\n";
@@ -139,7 +200,10 @@ void insertFunction(FunctionList &functionList) {
     cout << "Please select an option (1-3): ";
     int choice;
     cin >> choice;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the rest of the line
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter a number between 1 and 3.\n";
+        return;
+    }
     switch (choice) {
         case 1: {
             // Insert Power Function
@@ -162,12 +226,18 @@ void insertFunction(FunctionList &functionList) {
     // Implementation for inserting a function
 }
 
+/// @brief Function to delete a function from the list
+/// @details This function prompts the user for the ID of the function to be deleted and removes it from the list.
+/// @param functionList The list of functions from which the function will be deleted
 void deleteFunction(FunctionList &functionList) {
     showFunctionsList(functionList);
     cout << "\nEnter the ID of the function to delete: ";
     int id;
     cin >> id;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the rest of the line
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter a valid ID.\n";
+        return;
+    }
     if(functionList.deleteFunction(id)){
         cout << "Function with ID " << id << " deleted successfully.\n";
     }else{
@@ -175,11 +245,13 @@ void deleteFunction(FunctionList &functionList) {
     }
 }
 
+/// @brief Function to delete all functions from the list
+/// @details This function prompts the user for confirmation and deletes all functions from the list.
+/// @param functionList The list of functions from which all functions will be deleted
 void deleteAllFunctions(FunctionList &functionList) {
     cout << "Are you sure you want to delete all functions? (y/n): ";
     char confirm;
     cin >> confirm;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the rest of the line
     if (confirm != 'y' && confirm != 'Y') {
         cout << "Deletion cancelled.\n";
         return;
@@ -191,19 +263,32 @@ void deleteAllFunctions(FunctionList &functionList) {
     }
 }
 
+/// @brief Function to select a function by ID and evaluate it at a given x
+/// @details This function prompts the user for the ID of the function and the value of x, then evaluates the function.
+/// @param functionList The list of functions from which the function will be selected
 void selectFunction(FunctionList &functionList) {
     showFunctionsList(functionList);
     cout << "\nEnter the ID of the function to select: ";
     int id;
     cin >> id;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the rest of the line
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter a valid ID.\n";
+        return;
+    }
     cout << "Enter the value of x: ";
     double x;
     cin >> x;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the rest of the line
+    if(checkIfNumeric() == false){
+        cout << "Invalid input. Please enter a numeric value for x.\n";
+        return;
+    }
     functionList.selectFunction(id, x);
 }
 
+/// @brief Function to manage user choice
+/// @details This function takes the user's choice and calls the appropriate function.
+/// @param choice The user's choice as an integer
+/// @param functionList The list of functions to be managed
 int manageUserChoice(int choice, FunctionList &functionList) {
     switch (choice) {
         case 0:

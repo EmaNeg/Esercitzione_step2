@@ -15,6 +15,9 @@
 
 using namespace std;
 
+/// @class Menu
+/// @brief Class for managing a menu
+/// @details This class contains functions to display a menu and handle user input.
 class Menu {
 private:
     /// @name MEMBERS VARIABLEs

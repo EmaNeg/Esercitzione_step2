@@ -175,6 +175,7 @@ void Polynomial::WarningMessage(const char *string) {
 }
 
 /// @brief Gives the status of the object 
+/// @details This function prints the coefficients of the polynomial.
 void Polynomial::Dump() {
 
 	int i;

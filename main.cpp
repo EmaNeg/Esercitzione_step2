@@ -3,7 +3,7 @@
     @author Emanuele Negrino and Carlo Toscano
 */ 
 
-#include "menu.h"
+#include "Interface.h"
 #include "CPower.h"
 #include "CLogarithmic.h"
 #include "CPolynomial.h"
