@@ -102,6 +102,6 @@ void Logarithmic::Dump() {
     }
     else
     {
-        cout << k_coeff << "*log_" << b_coeff << " (x)" << endl << endl;
+        cout << k_coeff << "*log_" << b_coeff << " (x)";
     }
 }

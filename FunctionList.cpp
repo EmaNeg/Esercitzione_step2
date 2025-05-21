@@ -180,6 +180,7 @@ void FunctionList::showFunctionsList() {
                 break;
         }
         currentPtr->funzione->Dump();
+        cout << endl;
         currentPtr = currentPtr->nextFunctionElement;
     }
 }

@@ -11,17 +11,16 @@ using namespace std;
 /// @brief Default Constructor of Menu class
 /// @details This constructor initializes the menu options.
 Menu::Menu() {
-    // Constructor implementation
 }
-
 /// @brief Destructor of Menu class
-/// @details This destructor cleans up the menu options.
+/// @details This destructor clears the options vector.
 Menu::~Menu() {
+    options.clear(); // Clear the options vector
 }
 
 /// @brief Function to display the menu options
 /// @details This function displays the menu options to the user and prompts for input.
-void Menu::displayMenu() {
+void Menu::display() {
     // Display the menu options
     options = {
         "Esci dal menù",
@@ -32,7 +31,7 @@ void Menu::displayMenu() {
         "Seleziona una funzione"
     };
 
-    cout << "Menu Options:\n";
+    cout << "\nMenu Options:\n";
     for (size_t i = 0; i < options.size(); ++i) {
         cout << i << ". " << options[i] << "\n";
     }
@@ -126,8 +125,8 @@ void insertLogFunction(FunctionList &functionList) {
     }
     cout << "Enter base: ";
     cin >> base;
-    if(checkIfNumeric() == false){
-        cout << "Invalid input. Please enter numeric values.\n";
+    if(checkIfNumeric() == false || base <= 0 || base == 1){
+        cout << "Invalid input. Please enter positive numeric values, not equal to 1.\n";
         return;
     }
     Function *logFunction = new Logarithmic(coeff, base);
@@ -153,7 +152,7 @@ void insertPolynomialFunction(FunctionList &functionList) {
     int degree;
     cout << "Enter degree: ";
     cin >> degree;
-    if(checkIfNumeric() == false){
+    if(checkIfNumeric() == false || degree < 0){
         cout << "Invalid input. Please enter a non-negative integer.\n";
         return;
     }
@@ -162,7 +161,7 @@ void insertPolynomialFunction(FunctionList &functionList) {
         cout << "Memory allocation failed.\n";
         return;
     }
-    cout << "Enter coefficients (from constant to highest degree): ";
+    cout << "Enter coefficients (from constant to highest degree):\n";
     for (int i = 0; i <= degree; ++i) {
         cin >> coefficients[i];
         if(checkIfNumeric() == false){
@@ -171,7 +170,7 @@ void insertPolynomialFunction(FunctionList &functionList) {
             return;
         }
     }
-    Function *polyFunction = new Polynomial(coefficients, degree);
+    Function *polyFunction = new Polynomial(coefficients, degree+1); //degree+1 because polynomial wants size of coeff array
     cout << "Polynomial function: ";
     polyFunction->Dump();
     cout << "\nAre you sure you want to add this function? (y/n): ";
@@ -193,7 +192,7 @@ void insertPolynomialFunction(FunctionList &functionList) {
 /// @details This function prompts the user to choose a function type and calls the appropriate insertion function.
 /// @param functionList The list of functions to which the new function will be added
 void insertFunction(FunctionList &functionList) {
-    cout << "Chose a function to insert:\n";
+    cout << "\nChose a function to insert:\n";
     cout << "1. Power Function\n";
     cout << "2. Logarithmic Function\n";
     cout << "3. Polynomial Function\n";
@@ -248,18 +247,21 @@ void deleteFunction(FunctionList &functionList) {
 /// @brief Function to delete all functions from the list
 /// @details This function prompts the user for confirmation and deletes all functions from the list.
 /// @param functionList The list of functions from which all functions will be deleted
-void deleteAllFunctions(FunctionList &functionList) {
+/// @return true if all functions were deleted, false otherwise
+bool deleteAllFunctions(FunctionList &functionList) {
     cout << "Are you sure you want to delete all functions? (y/n): ";
     char confirm;
     cin >> confirm;
     if (confirm != 'y' && confirm != 'Y') {
         cout << "Deletion cancelled.\n";
-        return;
+        return 0;
     }
     if(functionList.deleteAllFunctions()){
         cout << "All functions deleted successfully.\n";
+        return 1;
     }else{
         cout << "No functions to delete.\n";
+        return 1;
     }
 }
 
@@ -285,6 +287,23 @@ void selectFunction(FunctionList &functionList) {
     functionList.selectFunction(id, x);
 }
 
+/// @brief Function to exit the menu
+/// @details This function prompts the user for confirmation and exits the menu.
+/// @param functionList The list of functions to be managed
+/// @return true if the user wants to exit, false otherwise
+bool exitMenu(FunctionList &functionList) {
+    cout << "Are you sure you want to exit? (y/n): ";
+    char confirm;
+    cin >> confirm;
+    if (confirm != 'y' && confirm != 'Y') {
+        cout << "Exiting cancelled.\n";
+        return false;
+    }
+    functionList.deleteAllFunctions();
+    cout << "Exiting the menu.\n";
+    return true;
+}
+
 /// @brief Function to manage user choice
 /// @details This function takes the user's choice and calls the appropriate function.
 /// @param choice The user's choice as an integer
@@ -292,9 +311,10 @@ void selectFunction(FunctionList &functionList) {
 int manageUserChoice(int choice, FunctionList &functionList) {
     switch (choice) {
         case 0:
-            cout << "Exiting the menu.\n";
-            deleteAllFunctions(functionList);
-            return 0;
+            if(exitMenu(functionList)){
+                return 0;
+            }
+            break;
         case 1:
             showFunctionsList(functionList);
             break;

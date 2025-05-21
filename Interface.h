@@ -34,7 +34,7 @@ public:
 
     /// @name MEMBER FUNCTIONS
     /// @{
-    void displayMenu();
+    void display();
     int getUserChoice();
     /// @}
 };
@@ -44,7 +44,7 @@ public:
 void insertFunction(FunctionList &functionList);
 void showFunctionsList(FunctionList &functionList);
 void deleteFunction(FunctionList &functionList);
-void deleteAllFunctions(FunctionList &functionList);
+bool deleteAllFunctions(FunctionList &functionList);
 void selectFunction(FunctionList &functionList);
 int manageUserChoice(int choice, FunctionList &functionList);
 /// @}

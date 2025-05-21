@@ -105,5 +105,5 @@ void Power::WarningMessage(const char *string) {
 
 /// @brief Gives the status of the object
 void Power::Dump() {
-    cout << k_coeff << "*x^" << e_coeff << endl << endl;
+    cout << k_coeff << "*x^" << e_coeff;
 }

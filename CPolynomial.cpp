@@ -201,6 +201,5 @@ void Polynomial::Dump() {
                 }
         }
     }
-	cout << endl << endl;
 
 }

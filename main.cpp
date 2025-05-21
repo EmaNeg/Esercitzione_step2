@@ -1,4 +1,4 @@
-/*! @file main
+/*! @file main.cpp
     @brief Main function for the program
     @author Emanuele Negrino and Carlo Toscano
 */ 
@@ -15,19 +15,16 @@ int main() {
     Menu menu;
     FunctionList functionList;
 
-    while (true) {
+    int choice = 0;
 
-        menu.displayMenu();
+    do {
+
+        menu.display();
         
         // Get user choice
-        int choice = menu.getUserChoice();
+        choice = menu.getUserChoice();
         
-        // Handle user choice
-        if (manageUserChoice(choice, functionList) == 0) {
-            break; // Exit the loop if the user chooses to exit
-        }
-        
-    }
+    } while (manageUserChoice(choice, functionList)); 
     
     return 0;
 }
