@@ -58,6 +58,8 @@ public:
     bool deleteAllFunctions();
     void selectFunction(int id, double x);
     void showFunctionsList();
+    int searchID();
+    void sortID();
     /// @}
 };
 

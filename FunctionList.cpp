@@ -41,10 +41,9 @@ FunctionList::~FunctionList() {
 }
 
 /// @brief Function to search for the next available ID in the function list.
-/// @param firstElement Pointer to the first element of the function list.
 /// @return The next available ID for a new function.
 /// @details This function iterates through the list of functions and finds the maximum ID.
-int searchID(FunctionElementsPtr firstElement) {
+int FunctionList::searchID() {
     FunctionElementsPtr currentPtr = firstElement;
     int maxID = -1;
     while (currentPtr != NULL) {
@@ -65,7 +64,7 @@ bool FunctionList::addFunction(Function *f) {
     FunctionElementsPtr prevPtr;
     FunctionElementsPtr currentPtr;
     if(pNew != NULL && f != NULL){
-        pNew->ID=searchID(firstElement);
+        pNew->ID=searchID();
         pNew->type = f->getType();
         pNew->funzione = f;
 
@@ -88,6 +87,18 @@ bool FunctionList::addFunction(Function *f) {
     }
     else{
         return 0;
+    }
+}
+
+/// @brief Function to riorganize the list of functions renumbering the IDs.
+/// @details This function iterates through the list and assigns new IDs to each function in order.
+void FunctionList::sortID() {
+    FunctionElementsPtr currentPtr = firstElement;
+    int newID = 0;
+    while (currentPtr != NULL) {
+        currentPtr->ID = newID; // Assign new ID
+        newID++;
+        currentPtr = currentPtr->nextFunctionElement; // Move to the next element
     }
 }
 
@@ -114,6 +125,7 @@ bool FunctionList::deleteFunction(int id) {
         }
         delete currentPtr->funzione; // Assuming funzione is dynamically allocated
         delete currentPtr;
+        sortID(); // Reorganize the list after deletion
         return 1;
     }
 }
