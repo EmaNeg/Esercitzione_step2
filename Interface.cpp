@@ -237,10 +237,22 @@ void deleteFunction(FunctionList &functionList) {
         cout << "Invalid input. Please enter a valid ID.\n";
         return;
     }
-    if(functionList.deleteFunction(id)){
-        cout << "Function with ID " << id << " deleted successfully.\n";
-    }else{
-        cout << "Function with ID " << id << " not found.\n";
+    cout << "Are you sure you want to delete the function with ID " << id << "? (y/n): ";
+    char confirm;
+    cin >> confirm;
+    if (confirm != 'y' && confirm != 'Y') {
+        
+        cout << "Deletion cancelled.\n";
+        return;
+
+    } else {
+
+        if(functionList.deleteFunction(id)){
+            cout << "Function with ID " << id << " deleted successfully.\n";
+        }else{
+            cout << "Function with ID " << id << " not found.\n";
+        }
+
     }
 }
 
@@ -308,6 +320,7 @@ bool exitMenu(FunctionList &functionList) {
 /// @details This function takes the user's choice and calls the appropriate function.
 /// @param choice The user's choice as an integer
 /// @param functionList The list of functions to be managed
+/// @return 0 if the user wants to exit, 1 otherwise
 int manageUserChoice(int choice, FunctionList &functionList) {
     switch (choice) {
         case 0:
